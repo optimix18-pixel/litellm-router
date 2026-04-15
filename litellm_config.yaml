@@ -2,9 +2,8 @@ model_list:
 
   - model_name: cline-act
     litellm_params:
-      model: openrouter/minimax/minimax-m2.5:free
-      api_key: os.environ/OPENROUTER_API_KEY
-      api_base: https://openrouter.ai/api/v1
+      model: ollama/qwen2.5-coder:7b
+      api_base: https://deine-ollama-railway-url.up.railway.app
 
   - model_name: cline-plan
     litellm_params:
