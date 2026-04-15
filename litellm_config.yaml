@@ -8,19 +8,19 @@ model_list:
 
   - model_name: cline-plan
     litellm_params:
-      model: openrouter/google/gemma-4-31b-it:free
+      model: openrouter/meta-llama/llama-3.3-70b-instruct:free
       api_key: os.environ/OPENROUTER_API_KEY
       api_base: https://openrouter.ai/api/v1
 
   - model_name: fallback-1
     litellm_params:
-      model: openrouter/qwen/qwen3-coder-480b-a35b-instruct:free
+      model: openrouter/google/gemma-4-31b-it:free
       api_key: os.environ/OPENROUTER_API_KEY
       api_base: https://openrouter.ai/api/v1
 
   - model_name: fallback-2
     litellm_params:
-      model: openrouter/meta-llama/llama-3.3-70b-instruct:free
+      model: openrouter/qwen/qwen3-coder-480b-a35b-instruct:free
       api_key: os.environ/OPENROUTER_API_KEY
       api_base: https://openrouter.ai/api/v1
 
@@ -33,13 +33,14 @@ model_list:
 router_settings:
   num_retries: 3
   retry_after: 5
-  timeout: 60
+  timeout: 30
   fallbacks:
     - {"cline-act":  ["cline-plan", "fallback-1", "fallback-2", "fallback-3"]}
     - {"cline-plan": ["cline-act",  "fallback-1", "fallback-2", "fallback-3"]}
 
 litellm_settings:
   drop_params: true
+  request_timeout: 30
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
