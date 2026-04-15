@@ -1,0 +1,35 @@
+model_list:
+  - model_name: cline-act
+    litellm_params:
+      model: openrouter/minimax/minimax-m2.5:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+
+  - model_name: cline-plan
+    litellm_params:
+      model: openrouter/google/gemma-2-9b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+
+  - model_name: fallback-1
+    litellm_params:
+      model: openrouter/mistralai/mistral-7b-instruct:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+
+  - model_name: fallback-2
+    litellm_params:
+      model: openrouter/meta-llama/llama-3-8b-instruct:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      api_base: https://openrouter.ai/api/v1
+
+router_settings:
+  num_retries: 3
+  retry_after: 5
+  timeout: 60
+  fallbacks:
+    - {"cline-act":  ["cline-plan", "fallback-1", "fallback-2"]}
+    - {"cline-plan": ["cline-act",  "fallback-1", "fallback-2"]}
+
+litellm_settings:
+  drop_params: true
